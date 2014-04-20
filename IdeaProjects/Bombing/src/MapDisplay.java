@@ -16,21 +16,22 @@ public class MapDisplay extends Rectangle {
     ImageControl control;
     SpriteLib lib;
     Vector<Tile> tiles;
-    Vector<Sprite> sprites;
+
     Game parent;
     Rectangle2D display;
     double dx = 0;
     double dy = 0;
 
-    public MapDisplay(String level, String picpath, int col, int row, GamePanel p){
+    public MapDisplay(String level, String picpath,String shadowpath, int col, int row, GamePanel p){
         tiles = new Vector<Tile>();
-        sprites = new Vector<Sprite>();
+
         parent = (Game) p;
 
         loadLevelData(level);
 
         control = ImageControl.getInstance();
         control.setSourceImage(picpath,col,row);
+        control.setShadowImage(shadowpath,col,row);
         display = new Rectangle2D.Double(0,0,parent.getWidth(),parent.getHeight());
 
     }
@@ -136,5 +137,22 @@ public class MapDisplay extends Rectangle {
     }
 
 
+    public Color getColorForPoint(Point p){
+        for(Tile t:tiles){
+            double dx = t.x - display.getX();
+            double dy = t.y - display.getY();
+
+            Rectangle temp2 = new Rectangle((int) dx,(int)dy,(int)t.getWidth(),(int)t.getHeight());
+
+            if(temp2.contains(p)){
+                int px = (int) (p.x -dx);
+                int py = (int) (p.y -dy);
+
+                Color c = new Color(ImageControl.getInstance().getShadowImageAt(t.getImageNumber()).getRGB(px,py));
+                return c;
+            }
+        }
+        return null;
+    }
 
 }

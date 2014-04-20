@@ -38,7 +38,7 @@ public class Game extends GamePanel {
         lib = SpriteLib.getInstance();
 
 
-        map = new MapDisplay("levels/level1.txt","pics/tiles.gif",3,4,this);
+        map = new MapDisplay("levels/level1.txt","pics/tiles1.gif","pics/tilesshadow1.gif",3,4,this);
         map.setVisibleRectangle(new Rectangle2D.Double(500, 500,getWidth(), getHeight()));
 
         player = new Player(lib.getSprite("pics/Bomber.gif",4,1),375,275,100,this,map);
@@ -167,5 +167,8 @@ public class Game extends GamePanel {
         if(e.getKeyCode()==KeyEvent.VK_P){
 
         }
+    }
+    public MapDisplay getMap(){
+        return map;
     }
 }
