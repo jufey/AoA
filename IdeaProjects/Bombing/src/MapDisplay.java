@@ -22,6 +22,11 @@ public class MapDisplay extends Rectangle {
     double dx = 0;
     double dy = 0;
 
+    boolean frameEndUp=false;
+    boolean frameEndDown=false;
+    boolean frameEndLeft=false;
+    boolean frameEndRight=false;
+
     public MapDisplay(String level, String picpath,String shadowpath, int col, int row, GamePanel p){
         tiles = new Vector<Tile>();
 
@@ -111,6 +116,7 @@ public class MapDisplay extends Rectangle {
     }
 
     public void moveVisibleRectangle(long delta){
+
         double x = display.getX();
         double y = display.getY();
 
@@ -125,12 +131,32 @@ public class MapDisplay extends Rectangle {
         }
         if(x<0){
             x=0;
+
         }
         if((y+display.getHeight())>height){
             y= height -display.getHeight();
         }
         if(y<0){
             y=0;
+
+        }
+        //Ckeck FrameEnds
+
+        if(x<5){
+            frameEndLeft=true;
+            //System.out.println("Links");
+        }
+        if(y<5){
+            frameEndUp=true;
+           // System.out.println("Oben");
+        }
+        if((x+display.getWidth())> width-5){
+            frameEndRight=true;
+            //System.out.println("Rechts");
+        }
+        if((y+display.getHeight())> height-5){
+            frameEndDown=true;
+            //System.out.println("Unten");
         }
         display.setRect(x,y,display.getWidth(),display.getHeight());
 
@@ -154,5 +180,41 @@ public class MapDisplay extends Rectangle {
         }
         return null;
     }
+    public boolean isFrameEndUp(){
+        return frameEndUp;
+    }
+    public boolean isFrameEndDown(){
+        return frameEndDown;
+    }
+    public boolean isFrameEndLeft(){
+        return frameEndLeft;
+    }
+    public boolean isFrameEndRight(){
+        return frameEndRight;
+    }
+    public void setFrameEndFalse(){
+        frameEndDown=false;
+        frameEndUp=false;
+        frameEndLeft= false;
+        frameEndRight=false;
+
+    }
+
+    public boolean moveArea(Player player){
+        double dx = (display.getWidth()/2) -display.getX()+26;
+        double dy = (display.getHeight()/2) -display.getY()+26;
+
+        Rectangle2D area = new Rectangle2D.Double((int)dx,(int)dy,(int)(getWidth()-display.getWidth()-52),(int)(getHeight()-display.getHeight()-52));
+
+        if(area.intersects(player)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
+    }
+
 
 }

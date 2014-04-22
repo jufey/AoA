@@ -52,7 +52,7 @@ public abstract class GamePanel extends Canvas implements Runnable,KeyListener, 
 
         Frame frame = new JFrame("Window");
         frame.setLocation(300, 100);
-
+        frame.setBackground(Color.black);
         frame.addKeyListener(this);
         frame.add(this);
         frame.pack();
@@ -176,6 +176,11 @@ public abstract class GamePanel extends Canvas implements Runnable,KeyListener, 
 
     protected void stopGame(){
         setGame_status(0);
+    }
+    protected void exitGame(){
+        setGame_status(0);
+        System.exit(0);
+        game_running =false;
     }
 
 

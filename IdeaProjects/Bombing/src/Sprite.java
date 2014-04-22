@@ -39,7 +39,7 @@ public abstract class Sprite extends Rectangle2D.Double implements Drawable, Mov
     @Override
     public void drawObjects(Graphics g) {
 
-        if(new Rectangle2D.Double(this.x,this.y,20,20).intersects(map.display)){
+        if(new Rectangle2D.Double(this.x,this.y,50,50).intersects(map.display)){
             double dx = this.x -map.display.getX();
             double dy = this.y -map.display.getY();
             g.drawImage(pics[currentpic], (int) dx, (int) dy, null);

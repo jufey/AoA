@@ -3,15 +3,18 @@
  */
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Player extends Sprite {
 
     Game parent;
+    MapDisplay map;
 
     public Player(BufferedImage[] i, double x, double y, long delay, GamePanel p, MapDisplay map) {
         super(i, x, y, delay, p, map);
         parent = (Game) p;
+        this.map = map;
 
     }
 
@@ -64,5 +67,39 @@ public class Player extends Sprite {
     public void setY(double i) {
         y = i;
     }
+
+    public boolean isMidHorizontal() {
+        if (378-(int)x<=3 ) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean isMidVertical() {
+        if (275-(int)y <= 3) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public void move(long delta) {
+        if (dx != 0) {
+            x += dx * (delta / 1e9);
+        }
+        if (dy != 0) {
+            y += dy * (delta / 1e9);
+        }
+    }
+
+    public void printPos(){
+        System.out.println("X: "+(this.x));
+        System.out.println("Y: "+(this.y));
+    }
+
 
 }
